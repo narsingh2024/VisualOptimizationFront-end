@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { SocketProvider } from './context/SocketContext';
+import PrivateRoute from './components/auth/PrivateRoute';
+import ClientDashboard from './pages/ClientDashboard';
+import VotingPage from './pages/VotingPage';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Navbar from './components/ui/Navbar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        {/* <SocketProvider> */}
+          <Navbar />
+          <div className="container mx-auto px-4 py-8">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/vote/:testId" element={<VotingPage />} />
+              
+              {/* Protected routes */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/" element={<ClientDashboard />} />
+                <Route path="/dashboard" element={<ClientDashboard />} />
+              </Route>
+            </Routes>
+          </div>
+        {/* </SocketProvider> */}
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

@@ -13,11 +13,13 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    console.log('Form Submitted'); // Debugging line
     e.preventDefault();
     try {
       await api.post('/auth/register', formData);
       navigate('/login');
     } catch (err) {
+      console.log('Registration Error:', err); // Debugging line
       setError(err.response?.data?.error || 'Registration failed');
     }
   };

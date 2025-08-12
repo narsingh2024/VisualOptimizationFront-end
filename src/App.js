@@ -7,6 +7,7 @@ import VotingPage from './pages/VotingPage';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Navbar from './components/ui/Navbar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
               {/* Protected routes */}
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<ClientDashboard />} />
-                <Route path="/dashboard" element={<ClientDashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Route>
             </Routes>
           </div>

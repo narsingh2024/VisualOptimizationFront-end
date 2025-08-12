@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://visualoptimizationback-end.onrender.com',
+  withCredentials: true
 });
 
-// Add request interceptor for auth token
-api.interceptors.request.use((config) => {
+// Request interceptor
+api.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -13,12 +14,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Add response interceptor for error handling
+// Response interceptor
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
-      // Handle unauthorized (e.g., redirect to login)
+      // Handle unauthorized
+      localStorage.removeItem('token');
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useContext } from 'react';
+// import { useAuth } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function TestList() {
-  const { user } = useAuth();
+   const { user } = useContext(AuthContext);
+  
   // Mock data - replace with real API calls
   const tests = [
     {
